@@ -1,86 +1,73 @@
 #include <iostream>
 #include <algorithm>
-#include <cstring>
 #include <queue>
-#include <cstdio>
-#include <map>
+#include <cstring>
 
 using namespace std;
-int n,m;
-int W[1001][1001][2] = {0, };
-int d[1001][1001];
 
-typedef struct t{
-    int x;
+typedef struct s{
     int y;
-    int l;
-}t;
+    int x;
+    int f;
+}s;
 
-queue <t> q;
+int n,m;
+char arr[1001][1001];
+int W[1001][1001][2];
 
 int dx[4] = {0,0,1,-1};
 int dy[4] = {1,-1,0,0};
 
-int bfs(){
-    t temp;
-    int x,y,l, nx,ny;
-    W[0][0][0] = 1;
-    while(!q.empty()){
-        x = q.front().x;
-        y = q.front().y;
-        l = q.front().l;
-       // printf("%d %d %d, %d\n", y,x,l,W[y][x][l]);
-        if(x == m-1 && y == n-1)
-            return W[y][x][l];
-        
-        for(int i=0;i<4;i++){
-            
-            nx = x + dx[i];
-            ny = y + dy[i];
-            
-            if(W[ny][nx][l]) continue;
-            if(nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-            
-            if(d[ny][nx] == 0){
-              //  printf("%d\n",i);
-                W[ny][nx][l] = W[y][x][l] + 1;
-                temp.x = nx;
-                temp.y = ny;
-                temp.l = l;
-                
-                q.push(temp);
-            }
-            
-            if(d[ny][nx] == 1 && l == 0){
-               // printf("%d\n",i);
-                W[ny][nx][l+1] = W[y][x][l] + 1;
-                temp.x = nx;
-                temp.y = ny;
-                temp.l = l+1;
-                
-                q.push(temp);
-            }
-        }
-        q.pop();
-    }
-    
-    return -1;
+queue <s> q;
+
+bool promising(int y, int x, int f){
+    if(y>=0 && x>=0 && y<n && x<m && W[y][x][f] == 0) return true;
+    else return false;
 }
 
+void bfs(int y, int x, int f){
+    int ny, nx;
+    
+    for(int i=0;i<4;i++){
+        ny = y + dy[i];
+        nx = x + dx[i];
+
+        if(promising(ny, nx, f)){
+            if(arr[ny][nx] == '0'){
+                W[ny][nx][f] = W[y][x][f] + 1;
+                q.push({ny, nx, f});
+            }
+            if(arr[ny][nx] == '1' && f == 0){
+                W[ny][nx][f+1] = W[y][x][f] + 1;
+                q.push({ny, nx, f+1});
+            }
+        }
+
+    }
+}
 int main(){
     cin>>n>>m;
-    t s;
-    
+    memset(W, 0, sizeof(W));
+
     for(int i=0; i<n; i++)
         for(int j=0; j<m; j++)
-            scanf("%1d", &d[i][j]);
+            cin>>arr[i][j];
     
-   
-    s.x = 0;
-    s.y = 0;
-    s.l = 0;
-    
-    q.push(s);
-    printf("%d\n", bfs());
+    q.push({0,0,0});
+    W[0][0][0] = 1;
+    while(!q.empty()){
+        int x,y,f;
+        y = q.front().y;
+        x = q.front().x;
+        f = q.front().f;
+        q.pop();
+        if(y == n-1 && x == m-1){
+            cout<<W[y][x][f]<<endl;
+            exit(0);
+        }
+        bfs(y,x,f);
+    }
+
+    cout<<-1<<endl;
     
 }
