@@ -1,4 +1,4 @@
-# Backjoon Algorithm Solve
+# Baekjoon Algorithm Solve
 
 ### My Account
 https://solved.ac/profile/pppqqq99
