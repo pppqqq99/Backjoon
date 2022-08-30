@@ -40,32 +40,10 @@ void postOrder(int root){
 
 int main(){
     int parent, node, root;
-    ios_base :: sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
     cin>>parent;
     root = parent;
     while(cin>>node){
         makeTree(root, node);
-        // if(parent > node){
-        //     parent = treeLeft(parent, node);
-        // }else{
-        //     int before = parent;
-        //     int child = 2, temp;
-        //     while((parent = arr[parent][0]) != 0 && parent < node) before = parent;
-        //     while((temp = arr[before][child]) != 0){
-        //         if(temp > node) child = 1;
-        //         else child = 2;
-        //         before = temp;
-        //     }
-        //     if(child == 1)
-        //         parent = treeLeft(before, node);
-        //     else
-        //         parent = treeRight(before, node);
-        // }
     }
-    
     postOrder(root);
-
 }
