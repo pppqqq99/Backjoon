@@ -68,10 +68,6 @@ int main(){
         v.push_back(a);
     }
 
-    if(m==2 && v[1] == v[2]){
-        cout<<"YES"<<endl;
-    }else{
-        bfs(1);
-    }
+    bfs(1);
 
 }
