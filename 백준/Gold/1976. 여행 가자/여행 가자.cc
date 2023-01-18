@@ -1,73 +1,63 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <queue>
+#include <algorithm>
 #include <cstring>
 
 using namespace std;
 int n, m;
-bool checked[201] = {false, };
-queue <int> q;
+int parent[201] = {0, };
 vector <int> v;
-vector <int> arr[201];
 
-void bfs(int cnt){
+int getParent(int a){
+    if(parent[a] == a) return parent[a];
+    else return getParent(parent[a]);
+}
 
-    if(cnt == m){
-        cout<<"YES"<<endl;
-        return ;
-    }
-    // queue와 checked 배열 초기화
-    q = queue <int>();
-    memset(checked, 0 ,sizeof(checked));
+// 두 개의 노드의 부모를 합치는 함수
+void unionParent(int a, int b){
+    int p1 = getParent(a);
+    int p2 = getParent(b);
 
-    // queue에 시작점 삽입3
-    q.push(v[cnt]);
-    checked[v[cnt]] = true;
-    
-    if(v[cnt] == v[cnt+1]){
-        bfs(cnt+1);
-        return ;
-    }
-    while(!q.empty()){
-        int now = q.front();
-        for(int i=0; i<arr[now].size(); i++){
-            if(arr[now][i] == v[cnt+1]){
-                bfs(cnt+1);
-                return ;
-            }else if(!checked[arr[now][i]]){
-                q.push(arr[now][i]);
-                checked[arr[now][i]] = true;
-            }else{
-                ;
-            }
-        }
-        q.pop();
-    }
-    cout<<"NO"<<endl;
+    if(p1 < p2) parent[p2] = p1;
+    else parent[p1] = p2;
+}
+// 두 개의 노드가 같은 부모인지 확인하는 함수
+int findParent(int a, int b){
+    int t1 = getParent(a);
+    int t2 = getParent(b);
 
+    if(t1 != t2) return 0;
+    else return 1;
 }
 
 int main(){
+    int tmp;
+
+    for(int i=1; i<sizeof(parent)/sizeof(int); i++){
+        parent[i] = i;
+    }
+
     cin>>n>>m;
+
     for(int i=1; i<=n; i++){
         for(int j=1; j<=n; j++){
-            int tmp;
             scanf("%d", &tmp);
             if(tmp == 1){
-                arr[i].push_back(j);
+                unionParent(i, j);
             }
         }
     }
 
-
-    v.push_back(0);
     for(int i=0; i<m; i++){
-        int a;
-        scanf("%d", &a);
-        v.push_back(a);
+        scanf("%d", &tmp);
+        v.push_back(tmp);
     }
 
-    bfs(1);
-
+    for(int i=0; i<m-1; i++){
+        if(!findParent(v[i], v[i+1])){
+            cout<<"NO"<<endl;
+            return 0;
+        }
+    }
+    cout<<"YES"<<endl;
 }
