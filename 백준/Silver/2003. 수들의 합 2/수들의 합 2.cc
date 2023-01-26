@@ -6,7 +6,9 @@ using namespace std;
 
 int n, m;
 
-vector <int> v;
+//vector <int> v;
+
+int v[10002] = {0, };
 
 int main(){
     cin>>n>>m;
@@ -14,26 +16,25 @@ int main(){
     for(int i=0; i<n; i++){
         int tmp;
         scanf("%d", &tmp);
-        v.push_back(tmp);
+        // v.push_back(tmp);
+        v[i] = tmp;
     }
-
-    // sort(v.begin(), v.end());
 
     int left = 0, right = 0, cnt = 0;
     long long sum = 0;
-    while(right <= v.size()){
+    while(right <= n){
         
-        //printf("left : %d, right : %d, sum : %lld\n", left, right, sum);
         if(sum == m){
             cnt++;
             sum -= v[left++];
         }else if(sum < m){
+            if(right == n) break;
             sum += v[right++];
         }else{
             sum -= v[left++];
         }
 
     }
-    
+
     cout<<cnt<<endl;
 }
