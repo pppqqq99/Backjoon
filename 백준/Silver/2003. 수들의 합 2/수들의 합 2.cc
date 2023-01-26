@@ -6,12 +6,13 @@ using namespace std;
 
 int n, m;
 
-//vector <int> v;
-
-int v[10002] = {0, };
+// vector <int> v;
+//int v[10000] = {0,};
 
 int main(){
     cin>>n>>m;
+    // vector <int> v;
+    int v[10000] = {0,};
 
     for(int i=0; i<n; i++){
         int tmp;
@@ -22,6 +23,7 @@ int main(){
 
     int left = 0, right = 0, cnt = 0;
     long long sum = 0;
+
     while(right <= n){
         
         if(sum == m){
