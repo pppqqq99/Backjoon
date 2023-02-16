@@ -48,26 +48,22 @@ int counting_sec(){
         int x = snake.front().second;
         int ny = y + dy[dd];
         int nx = x + dx[dd];
-
         dir.pop();
-
-        // cout<<ny<<", "<<nx<<" : "<<dd<<endl;
         
         // arr[ny][nx]가 벽이거나 자기 몸이 아니라면
         if(promising(ny, nx)){
+            
             // 사과라면
-            if(arr[ny][nx] == 2){
-                snake.push_front({ny, nx});
-                arr[ny][nx] = 1;
-            }else{
-                snake.push_front({ny, nx});
+            if(arr[ny][nx] == 0){
                 int ty = snake.back().first;
                 int tx = snake.back().second;
                 snake.pop_back();
-                arr[ny][nx] = 1;
                 arr[ty][tx] = 0;
             }
+            snake.push_front({ny, nx});
+            arr[ny][nx] = 1;
             cnt++;
+
         }else{
             cnt++;
             break;
