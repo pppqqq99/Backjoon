@@ -19,8 +19,9 @@ int main(){
         int input, flag=0;
         cin>>input;
         
+        // 같은 경우 안됨
         while(!st.empty()){
-            if(st.top().second > input){
+            if(st.top().second >= input){
                 cout<<st.top().first<<" ";
                 flag=1;
                 st.push({cnt, input});
