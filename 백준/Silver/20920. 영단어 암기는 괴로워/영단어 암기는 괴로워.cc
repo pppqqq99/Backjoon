@@ -9,20 +9,16 @@ using namespace std;
 unordered_map <string, int> mymap;
 vector <string> v;
 
-// mymap[a] > mymap[b]
-bool comp(string a, string b){
-    if(mymap[a] > mymap[b]){
-        return true;
-    }else if(mymap[a] < mymap[b]){
-        return false;
-    }else{
-        if(a.size() > b.size()){
-            return true;
-        }else if(a.size() < b.size()){
-            return false;
-        }else{
+
+bool comp2(string a, string b){
+    if(mymap[a] == mymap[b]){
+        if(a.size() == b.size()){
             return a<b;
+        }else{
+            return a.size()>b.size();
         }
+    }else{
+        return mymap[a] > mymap[b];
     }
 }
 
@@ -31,7 +27,7 @@ void dict(){
     // 1. 자주 나오는 단어
     // 2. 단어의 길이가 길수록
     // 3. 알파벳 사준 순
-    sort(v.begin(), v.end(), comp);
+    sort(v.begin(), v.end(), comp2);
     for(int i=0; i<v.size(); i++){
         cout<<v[i]<<'\n';
     }
