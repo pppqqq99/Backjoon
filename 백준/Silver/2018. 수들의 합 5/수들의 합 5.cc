@@ -11,20 +11,19 @@ int main(){
     cout.tie(NULL);
 
     int n;
-    int start=1, end=1, cnt=0;
+    int start=1, end=1, cnt=1;
     long long sum=1;
 
     cin>>n;
     
     // 반복
-    while(start <= n){
+    while(end < n){
 
         //  
         if(sum == n){
             cnt++;
-            sum -= start;
-            //cout<<start<<", "<<end<<endl;
-            start++;
+            end++;
+            sum += end;
         }else if(sum > n){
             sum -= start;
             start++;
