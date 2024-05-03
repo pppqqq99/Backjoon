@@ -12,7 +12,7 @@ string solution(vector<string> participant, vector<string> completion) {
     for(int i=0;i<participant.size();i++){
         auto it = umap.find(participant[i]);
         if(it == umap.end()){
-            umap.insert({participant[i], 1});
+            umap[participant[i]] = 1;
         }else{
             umap[participant[i]]++;
         }
